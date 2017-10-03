@@ -1,0 +1,15 @@
+{
+	"ImportPath": "tholok/ics_toggl_app",
+	"GoVersion": "go1.8",
+	"GodepVersion": "v79",
+	"Deps": [
+		{
+			"ImportPath": "github.com/PuloV/ics-golang",
+			"Rev": "e6b6b056a5f11e8ddb5aba01b1badc53e7b9abca"
+		},
+		{
+			"ImportPath": "github.com/jason0x43/go-toggl",
+			"Rev": "e29ab02959e51cfff48ebf40a6b2a446de3ffa4f"
+		}
+	]
+}
