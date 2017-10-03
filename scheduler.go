@@ -26,8 +26,8 @@ func (sch *Scheduler) do() {
 	t := time.Now()
 
 	// the time when we want to do the initial scheduling
-	firstScheduleTime := time.Date(t.Year(), t.Month(), t.Day(), scheduleHour,
-		scheduleMinute, scheduleSecond, 0, t.Location())
+	firstScheduleTime := time.Date(t.Year(), t.Month(), t.Day(), sch.hour,
+		sch.minute, sch.second, 0, t.Location())
 
 	// d is the time until next schedule time
 	d := firstScheduleTime.Sub(t)
@@ -99,7 +99,8 @@ func enterTimes(session toggl.Session, events []*ics.Event) {
 		id := getIDFromCode(events[i].GetSummary())
 		var te toggl.TimeEntry
 		if id != 0 {
-			te, err = session.StartTimeEntryForProject(events[i].GetDescription(), id, false)
+			te, err = session.StartTimeEntryForProject(events[i].GetDescription(),
+				id, false)
 		} else {
 			te, err = session.StartTimeEntry(events[i].GetDescription())
 		}
