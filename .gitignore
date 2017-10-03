@@ -2,6 +2,7 @@
 #
 # exclude .env file (contains personal info)
 .env
+account_info.json
 
 # IGNORE VIM-SPECIFIC FILES ----------------------------------------------------
 
