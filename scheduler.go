@@ -57,7 +57,7 @@ func (sch *Scheduler) beginScheduling() {
 	// if something went wrong, just give up... (continues running though)
 	// TODO make it try again later
 	if err != nil {
-		fmt.Println("Failed to scheduleJobs")
+		fmt.Println("Failed to scheduleJobs: ", err.Error())
 		return
 	}
 
