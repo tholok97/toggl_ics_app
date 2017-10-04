@@ -107,6 +107,7 @@ func enterTimes(session toggl.Session, events []*ics.Event) {
 	}
 
 	// SORT THE LECTURES HERE
+	events = sortEvents(events)
 
 	var err error
 
