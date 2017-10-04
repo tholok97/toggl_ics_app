@@ -230,8 +230,12 @@ func lecturesAt(parser *ics.Parser, when time.Time) ([]*ics.Event, error) {
 func prepareParser(path string) *ics.Parser {
 	parser := ics.New()
 	inputChan := parser.GetInputChan()
-	inputChan <- "https://innsida.ntnu.no/user/thomahl/student/timeplan?p_p_id=timeplanportlet_WAR_timeplanportlet&p_p_lifecycle=2&p_p_state=normal&p_p_mode=view&p_p_resource_id=schedulesIcal&p_p_cacheability=cacheLevelPage&p_p_col_id=column-1&p_p_col_count=1"
+	inputChan <- path
 	parser.Wait()
+
+	cals, _ := parser.GetCalendars()
+	str := cals[0].GetDesc()
+	fmt.Println(str)
 
 	return parser
 }

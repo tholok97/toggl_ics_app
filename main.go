@@ -30,18 +30,24 @@ func main() {
 
 	token := os.Getenv("API_TOKEN")
 	if token == "" {
-		fmt.Println("Env error: (", err3.Error(), ")")
+		fmt.Println("Env error: empty token")
+	}
+
+	path := os.Getenv("PATH_TO_ICS")
+	if path == "" {
+		fmt.Println("Env error: empty ics-path")
 	}
 
 	// print so it shows up in the logs
 	fmt.Println("Schdule time: ", scheduleHour, ":", scheduleMinute, ":",
 		scheduleSecond)
 	fmt.Println("Token: ", token)
+	fmt.Println("Path: ", path)
 
 	// create scheduler with given properties
 	sch := Scheduler{
 		token:  token,
-		path:   "tholok_schedule.ics",
+		path:   path,
 		hour:   scheduleHour,
 		minute: scheduleMinute,
 		second: scheduleSecond,
