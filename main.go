@@ -34,29 +34,27 @@ func main() {
 	// get environment variables and start the scheduler
 
 	var scheduleHour, scheduleMinute, scheduleSecond int
-	var err1, err2, err3, err4 error
-	var token string
+	var err error
+	var token, path string
 
-	if scheduleHour, err1 = envAsInt("SCHEDULE_HOUR"); err1 != nil {
-		fmt.Println("Env error: (", err1.Error(), ")")
+	if scheduleHour, err = envAsInt("SCHEDULE_HOUR"); err != nil {
+		fmt.Println("Env error: (", err.Error(), ")")
 	}
 
-	if scheduleMinute, err2 = envAsInt("SCHEDULE_MINUTE"); err2 != nil {
-		fmt.Println("Env error: (", err2.Error(), ")")
+	if scheduleMinute, err = envAsInt("SCHEDULE_MINUTE"); err != nil {
+		fmt.Println("Env error: (", err.Error(), ")")
 	}
 
-	if scheduleSecond, err3 = envAsInt("SCHEDULE_SECOND"); err3 != nil {
-		fmt.Println("Env error: (", err3.Error(), ")")
+	if scheduleSecond, err = envAsInt("SCHEDULE_SECOND"); err != nil {
+		fmt.Println("Env error: (", err.Error(), ")")
 	}
 
-	token := os.Getenv("API_TOKEN")
-	if token == "" {
-		fmt.Println("Env error: empty token")
+	if token, err = envAsString("TOKEN"); err != nil {
+		fmt.Println("Env error: (", err.Error(), ")")
 	}
 
-	path := os.Getenv("PATH_TO_ICS")
-	if path == "" {
-		fmt.Println("Env error: empty ics-path")
+	if path, err = envAsString("TOKEN"); err != nil {
+		fmt.Println("Env error: (", err.Error(), ")")
 	}
 
 	// print so it shows up in the logs
