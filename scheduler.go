@@ -74,6 +74,29 @@ func (sch *Scheduler) beginScheduling() {
 	fmt.Println("DONE FOR TODAY")
 }
 
+func sortEvents(events []*ics.Event) []*ics.Event {
+
+	sorted := events
+
+	for i := 0; i < len(events)-1; i++ {
+
+		lowest := i
+		for j := i + 1; j < len(events); j++ {
+			if sorted[j].GetStart().Unix() < sorted[lowest].GetStart().Unix() {
+				lowest = j
+			}
+		}
+
+		if lowest != i {
+			temp := events[i]
+			events[i] = events[lowest]
+			events[lowest] = temp
+		}
+	}
+
+	return sorted
+}
+
 // sleep, and enter time entries at the appropriate times
 func enterTimes(session toggl.Session, events []*ics.Event) {
 
@@ -82,6 +105,8 @@ func enterTimes(session toggl.Session, events []*ics.Event) {
 		fmt.Println("no events")
 		return
 	}
+
+	// SORT THE LECTURES HERE
 
 	var err error
 
@@ -106,7 +131,7 @@ func enterTimes(session toggl.Session, events []*ics.Event) {
 		}
 
 		if err != nil {
-			fmt.Println(err.Error())
+			fmt.Println("error while starting timeentry: ", err.Error())
 		}
 
 		// sleep until end of event
