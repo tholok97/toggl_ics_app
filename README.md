@@ -6,4 +6,5 @@ The project makes use of:
 
 - https://github.com/PuloV/ics-golang
 - https://github.com/jason0x43/go-toggl
+
 ***Note:** One file is missing here, .env, as it includes my personal information*
