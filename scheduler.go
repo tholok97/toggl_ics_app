@@ -19,30 +19,36 @@ type Scheduler struct {
 	second int
 }
 
+// calculate duration until next HH:MM:SS
+func durUntilClock(hour, minute, second int) time.Duration {
+	t := time.Now()
+
+	// the time this HH:MM:SS is happening
+	when := time.Date(t.Year(), t.Month(), t.Day(), hour,
+		minute, second, 0, t.Location())
+
+	// d is the time until next such time
+	d := when.Sub(t)
+
+	// if duration is negative, add a day
+	if d < 0 {
+		when = when.Add(24 * time.Hour)
+		d = when.Sub(t)
+	}
+
+	return d
+}
+
 // begin scheduling. waits until first schedule time, then schedules, then waits
 // 24 hours, then schedules, repeat...
 func (sch *Scheduler) do() {
 
-	t := time.Now()
-
-	// the time when we want to do the initial scheduling
-	firstScheduleTime := time.Date(t.Year(), t.Month(), t.Day(), sch.hour,
-		sch.minute, sch.second, 0, t.Location())
-
-	// d is the time until next schedule time
-	d := firstScheduleTime.Sub(t)
-
-	// if time until first schedule time is negative: add 24 hours (next day)
-	if d < 0 {
-		firstScheduleTime = firstScheduleTime.Add(24 * time.Hour)
-		d = firstScheduleTime.Sub(t)
-	}
-
 	// wait until next time to schedule, then schedule
 	for {
-		wait(d, "Until next scheduletime")
-		d = 24 * time.Hour
 		sch.beginScheduling()
+
+		d := durUntilClock(sch.hour, sch.minute, sch.second)
+		wait(d, "Until next scheduletime")
 	}
 }
 
