@@ -19,26 +19,6 @@ type Scheduler struct {
 	second int
 }
 
-// calculate duration until next HH:MM:SS
-func durUntilClock(hour, minute, second int) time.Duration {
-	t := time.Now()
-
-	// the time this HH:MM:SS is happening
-	when := time.Date(t.Year(), t.Month(), t.Day(), hour,
-		minute, second, 0, t.Location())
-
-	// d is the time until next such time
-	d := when.Sub(t)
-
-	// if duration is negative, add a day
-	if d < 0 {
-		when = when.Add(24 * time.Hour)
-		d = when.Sub(t)
-	}
-
-	return d
-}
-
 // begin scheduling. waits until first schedule time, then schedules, then waits
 // 24 hours, then schedules, repeat...
 func (sch *Scheduler) do() {
@@ -80,31 +60,6 @@ func (sch *Scheduler) beginScheduling() {
 	fmt.Println("DONE FOR TODAY")
 }
 
-// sorts the events in ascheding order according to their start times
-// (using selection sort)
-func sortEvents(events []*ics.Event) []*ics.Event {
-
-	sorted := events
-
-	for i := 0; i < len(events)-1; i++ {
-
-		lowest := i
-		for j := i + 1; j < len(events); j++ {
-			if sorted[j].GetStart().Unix() < sorted[lowest].GetStart().Unix() {
-				lowest = j
-			}
-		}
-
-		if lowest != i {
-			temp := events[i]
-			events[i] = events[lowest]
-			events[lowest] = temp
-		}
-	}
-
-	return sorted
-}
-
 // sleep, and enter time entries at the appropriate times
 func enterTimes(session toggl.Session, events []*ics.Event) {
 
@@ -114,13 +69,14 @@ func enterTimes(session toggl.Session, events []*ics.Event) {
 		return
 	}
 
-	// SORT THE LECTURES HERE
 	events = sortEvents(events)
 
-	var err error
+	var err error          // error in toggl api calls
+	var te toggl.TimeEntry // time entry returned from toggl in api calls
+	const retryWait = 30   // time to wait until next retry
 
 	// time until next toggl action
-	diff := events[0].GetStart().Sub(time.Now())
+	diff := durUntilTime(events[0].GetStart())
 
 	// for each event
 	for i := range events {
@@ -128,30 +84,48 @@ func enterTimes(session toggl.Session, events []*ics.Event) {
 		// sleep until start of event
 		wait(diff, "Until start of "+events[i].GetDescription())
 
-		// start time entry (log)
-		fmt.Println("START: ", events[i].GetDescription())
-		id := getIDFromCode(events[i].GetSummary())
-		var te toggl.TimeEntry
-		if id != 0 {
-			te, err = session.StartTimeEntryForProject(events[i].GetDescription(),
-				id, false)
-		} else {
-			te, err = session.StartTimeEntry(events[i].GetDescription())
-		}
+		projectID := getIDFromCode(events[i].GetSummary())
 
-		if err != nil {
-			fmt.Println("error while starting timeentry: ", err.Error())
+		// start time entry for event[0]. try a maximum of 3 times
+		fmt.Println("START: ", events[i].GetDescription())
+		for j := 0; j < 3; j++ {
+			if projectID != 0 {
+				te, err = session.StartTimeEntryForProject(events[i].GetDescription(),
+					projectID, false)
+			} else {
+				fmt.Println("...Inserting time entry without project")
+				te, err = session.StartTimeEntry(events[i].GetDescription())
+			}
+
+			if err == nil {
+				break
+			}
+
+			fmt.Println("Coudln't start toggl entry: (", err.Error(),
+				"), RETRYING ", j)
+			wait(time.Second*retryWait, "until next retry")
 		}
 
 		// sleep until end of event
-		diff = events[i].GetEnd().Sub(time.Now())
+		diff = durUntilTime(events[i].GetEnd())
 		wait(diff, "Until end of "+events[i].GetDescription())
+
+		// stop the started time entry. try a maximum of 3 times
 		fmt.Println("\nEND: ", events[i].GetDescription())
-		session.StopTimeEntry(te)
+		for j := 0; j < 3; j++ {
+			te, err = session.StopTimeEntry(te)
+			if err == nil {
+				break
+			}
+
+			fmt.Println("Coudln't stop toggl entry: (", err.Error(),
+				"), RETRYING ", j)
+			wait(time.Second*retryWait, "until next retry")
+		}
 
 		// if this isn't the last event, calculate diff until start of event
 		if i < len(events)-1 {
-			diff = events[i+1].GetStart().Sub(time.Now())
+			diff = durUntilTime(events[i+1].GetStart())
 		}
 	}
 }
@@ -250,4 +224,54 @@ func prepareParser(path string) *ics.Parser {
 func wait(d time.Duration, msg string) {
 	fmt.Println("Sleeping (", d, "): ", msg)
 	time.Sleep(d)
+}
+
+// sorts the events in ascheding order according to their start times
+// (using selection sort)
+func sortEvents(events []*ics.Event) []*ics.Event {
+
+	sorted := events
+
+	for i := 0; i < len(events)-1; i++ {
+
+		lowest := i
+		for j := i + 1; j < len(events); j++ {
+			if sorted[j].GetStart().Unix() < sorted[lowest].GetStart().Unix() {
+				lowest = j
+			}
+		}
+
+		if lowest != i {
+			temp := events[i]
+			events[i] = events[lowest]
+			events[lowest] = temp
+		}
+	}
+
+	return sorted
+}
+
+// calculate duration until next HH:MM:SS
+func durUntilClock(hour, minute, second int) time.Duration {
+	t := time.Now()
+
+	// the time this HH:MM:SS is happening
+	when := time.Date(t.Year(), t.Month(), t.Day(), hour,
+		minute, second, 0, t.Location())
+
+	// d is the time until next such time
+	d := when.Sub(t)
+
+	// if duration is negative, add a day
+	if d < 0 {
+		when = when.Add(24 * time.Hour)
+		d = when.Sub(t)
+	}
+
+	return d
+}
+
+// calculate duration until time is when
+func durUntilTime(when time.Time) time.Duration {
+	return when.Sub(time.Now())
 }
