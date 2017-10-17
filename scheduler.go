@@ -19,6 +19,12 @@ type Scheduler struct {
 	second int
 }
 
+//TODO: modking test
+type SchedulerInterface interface {
+	do()
+	beginScheduling()
+}
+
 // begin scheduling. waits until first schedule time, then schedules, then waits
 // 24 hours, then schedules, repeat...
 func (sch *Scheduler) do() {

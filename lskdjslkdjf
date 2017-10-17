@@ -1,0 +1,99 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta http-equiv="Pragma" content="no-cache" />
+<meta http-equiv="Expires" content="-1" />
+<!-- To adjust iPhone visual appearance -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+
+<title>Feil forespørsel motatt</title>
+
+<!--[if IE]>
+	<link rel="stylesheet" type="text/css" href="https://idp.feide.no/simplesaml/module.php/feide/default_ie.css" />
+<![endif]-->
+
+<!--[if IE 6]>
+	<link rel="stylesheet" type="text/css" href="https://idp.feide.no/simplesaml/module.php/feide/default_ie6.css" />
+<![endif]-->
+
+	<link rel="stylesheet" type="text/css" href="https://idp.feide.no/simplesaml/module.php/feide/default.css" />
+	<link rel="stylesheet" type="text/css" href="https://idp.feide.no/simplesaml/module.php/feide/default-small.css" />
+	<link rel="stylesheet" type="text/css" href="https://idp.feide.no/simplesaml/module.php/feide/handheld_media.css" media="handheld" />
+	<link rel="icon" type="image/png" href="https://idp.feide.no/simplesaml/module.php/feide/favicon.ico" />
+	    <script type="text/javascript" src="/simplesaml/resources/script.js"></script>
+
+	<meta name="robots" content="noindex, nofollow" />
+
+
+<!-- head --><meta name="robots" content="noindex, nofollow" />
+<meta name="googlebot" content="noarchive, nofollow" /><!-- /head --></head>
+
+<body>
+
+
+<!-- <div id="borderframe"> -->
+<div class="corner_t">
+<div class="corner_l">
+<div class="corner_r">
+<div class="corner_b">
+		<div class="corner_tl" style="background-image: url('https://idp.feide.no/simplesaml/module.php/feide/topleft-watermark.png');"><div class="corner_tr"> <div class="corner_bl"> <div class="corner_br"> <div class="corner"><div id="logos">
+	<div class="minheight"></div>
+	<div id="languageframe">
+	<div id="languagebar">
+<a href="https://idp.feide.no/simplesaml/module.php/feide/login.php?language=en">English</a> | Bokmål | 
+<a href="https://idp.feide.no/simplesaml/module.php/feide/login.php?language=nn">Nynorsk</a> | 
+<a href="https://idp.feide.no/simplesaml/module.php/feide/login.php?language=se">Sámegiella</a></div>	<br style="clear: both; height: 0px;" />
+	</div>
+	</div>
+
+
+	<div id="content">
+
+
+    <h2>Feil forespørsel motatt</h2>
+En feil oppsto i forespørselen til denne siden. Grunnen var: Missing mandatory parameter: AuthState    <div class="trackidtext">
+        <p>Hvis vil rapportere denne feilen, send også med dette sporingsnummeret. Det gjør det enklere for systemadministratorene å finne ut hva som gikk galt:</p>
+        <div class="input-group" style="width: 1em;">
+            <pre id="trackid" class="input-left">0560698a2b</pre>
+            <button data-clipboard-target="#trackid" id="btntrackid" class="btnaddonright">
+                <img src="/simplesaml/resources/icons/clipboard.svg"
+                     alt="Copy to clipboard">
+            </button>
+        </div>
+    </div>
+    <h2>Detaljer for feilsøking</h2>
+    <p>Detaljene nedenfor kan være av interesse for administratoren / brukerstøtte:</p>
+
+    <div style="border: 1px solid #eee; padding: 1em; font-size: x-small">
+        <p style="margin: 1px">SimpleSAML_Error_BadRequest: BADREQUEST('%REASON%' =&gt; 'Missing mandatory parameter: AuthState')</p>
+        <pre style="padding: 1em; font-family: monospace;">Backtrace:
+1 modules/feide/www/login.php:14 (require)
+0 www/module.php:135 (N/A)</pre>
+    </div>
+    <h2>Rapporter feil</h2>
+    <form action="https://idp.feide.no/simplesaml/errorreport.php" method="post">
+        <p>Hvis du ønsker at brukerstøtte skal kunne kontakte deg igjen i forbindelse med denne feilen, må du oppgi e-postadressen din nedenfor:</p>
+        <p>E-postadresse:            <input type="email" size="25" name="email" value="" />
+        </p>
+        <p>
+            <textarea class="metadatabox" name="text" rows="6" style="width: 100%; padding: 0.5em;">Forklar hva du gjorde da feilen oppsto...</textarea>
+        </p>
+        <p>
+            <input type="hidden" name="reportId" value="75044981"/>
+            <button type="submit" name="send" class="btn">Send feilrapport</button>
+        </p>
+    </form>
+        <h2 style="clear: both">Hvordan få hjelp</h2>
+    <p>Denne feilen skyldes sannsynligvis feil i oppsettet av SimpleSAMLphp eller den er en følge av en uforutsett hendelse. Kontakt administratoren av denne tjenesten og rapporter så mye som mulig angående feilen.</p>
+    <script type="text/javascript">
+        var clipboard = new Clipboard('#btntrackid');
+    </script>
+
+</div> <!-- content -->
+
+
+</div></div></div></div></div></div></div></div></div> <!-- box -->
+
+</body>
+</html>
