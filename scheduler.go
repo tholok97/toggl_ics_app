@@ -133,14 +133,23 @@ func enterTimes(session toggl.Session, events []*ics.Event) {
 // determine toggl id from IMT code found in ics file
 func getIDFromCode(s string) int {
 	switch s {
-	case "IMT1362":
+	case "IMT1362": // UX
 		return 62056917
-	case "IMT2021":
+	case "IMT2021": // algmet
 		return 62056509
-	case "IMT2571":
+	case "IMT2571": // databaser
 		return 62056716
-	case "IMT2681":
+	case "IMT2681": // cloud
 		return 61803225
+	case "IMT3003": // tjenestearktiekturdrift
+		return 93287263
+	case "IMT2282": // os
+		return 92487328
+	case "IMT2291": // www
+		return 92526098
+	case "IMT3673": // mobile
+		return 93349063
+
 	default:
 		return 0
 	}
