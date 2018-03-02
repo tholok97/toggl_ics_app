@@ -1,0 +1,5 @@
+API_TOKEN="yourapitoken"
+SCHEDULE_HOUR=00
+SCHEDULE_MINUTE=10
+SCHEDULE_SECOND=00
+PATH_TO_ICS="apathtoadownloadableicsfile"
