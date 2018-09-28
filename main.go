@@ -63,7 +63,7 @@ func main() {
 	}
 
 	// print so it shows up in the logs
-	fmt.Println("Schdule time: ", scheduleHour, ":", scheduleMinute, ":",
+	fmt.Println("Schedule time: ", scheduleHour, ":", scheduleMinute, ":",
 		scheduleSecond)
 	fmt.Println("Token: ", token)
 	fmt.Println("Path: ", path)
