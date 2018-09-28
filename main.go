@@ -78,6 +78,6 @@ func main() {
 	}
 
 	// let the scheduler do it's thing
-	fmt.Println("Running schduler....")
+	fmt.Println("Running scheduler....")
 	sch.do()
 }
