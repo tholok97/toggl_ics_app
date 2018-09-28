@@ -1,0 +1,4 @@
+github.com/PuloV/ics-golang v0.0.0-20170814071048-e6b6b056a5f1 h1:S6YFVtHZOpdbtzebHrxvgOTHMDokDV4jobwAnkqRt68=
+github.com/PuloV/ics-golang v0.0.0-20170814071048-e6b6b056a5f1/go.mod h1:f1P3hjG+t54/IrnXMnnw+gRmFCDR/ryj9xSQ7MPMkQw=
+github.com/jason0x43/go-toggl v0.0.0-20170509022232-e29ab02959e5 h1:2KvPgDA77gDvaghd3E91vkv3EuE08bhBuTxcJ5SPde4=
+github.com/jason0x43/go-toggl v0.0.0-20170509022232-e29ab02959e5/go.mod h1:KG0hrGveY9im1V7Maa0rirkU2WCrn3zCLOLB/kp9f7s=
